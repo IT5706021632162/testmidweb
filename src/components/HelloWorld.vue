@@ -1,5 +1,11 @@
 <template>
   <div class="hello">
+    <button @click="sign()"> signin </button>
+    <button @click="signOut()"> signout </button>
+    <br>
+    <img :src="photoURL"> <br>
+    {{ displayName }}
+    <router-view></router-view>
     <div class="columns">
             <div class="column"></div>
                 <div class="column is-two-thirds">
@@ -90,6 +96,11 @@ var config = {
   messagingSenderId: '1097521811911'
 }
 firebase.initializeApp(config)
+var provider = new firebase.auth.FacebookAuthProvider()
+provider.addScope('public_profile')
+provider.setCustomParameters({
+  'display': 'popup'
+})
 export default {
   name: 'HelloWorld',
   data () {
@@ -97,6 +108,8 @@ export default {
       showstudent: '',
       cout: 0,
       checkEdit: '',
+      displayName: '',
+      photoURL: '',
       data: {
         code: '',
         name: '',
@@ -139,7 +152,33 @@ export default {
     },
     cancel () {
       this.checkEdit = ''
+    },
+    sign () {
+      console.log('yes')
+      var vm = this
+      firebase.auth().signInWithPopup(provider).then(function (result) {
+        var token = result.credential.accessToken
+        var user = result.user
+        console.log(token, user)
+        console.log('displayName :: ', user.displayName)
+        console.log('photoURL ::', user.photoURL)
+        vm.displayName = user.displayName
+        vm.photoURL = user.photoURL
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    signOut () {
+      var vm = this
+      firebase.auth().signOut().then(function () {
+        console.log('logOut')
+        vm.displayName = ''
+        vm.photoURL = ''
+      }, function (error) {
+        console.log(error)
+      })
     }
   }
 }
+
 </script>
