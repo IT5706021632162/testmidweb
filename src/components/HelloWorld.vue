@@ -64,7 +64,7 @@
                       <tr >
                          <td>  {{count+1}}  </td>
                           <td><input class="input is-info" type="number"  v-model="show.code" placeholder="รหัสนักศึกษา"> </td>
-                        <td>  <input class="input is-info" type="text" v-model="show.name" placeholder="ชื่อ"> </td> 
+                        <td>  <input class="input is-info" type="text" v-model="show.name" placeholder="ชื่อ"> </td>
                         <td>  <input class="input is-info" type="text" v-model="show.surname" placeholder="นามสกุล"> </td>
                         <td> <button type="button" class="button button is-success " name="buttonAdd"  @click="Update(key,show.code,show.name,show.surname)" >Save</button> </td>
                         <td> <button type="button" class="button is-danger" name="buttonAdd" @click="cancel()" >Cancel</button> </td>
@@ -143,13 +143,3 @@ export default {
   }
 }
 </script>
-
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.hello{
-    text-align: center;
-    height: 100%;
-    width:  100%;
-}
-</style>
